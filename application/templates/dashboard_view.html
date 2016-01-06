@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="static/css/dashboard.css" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+</script>
+<style>
+	.Green, .Amber, .Red, .Grey {
+		background: #27AE60;
+		width:{{ width_value + "%;" }}
+		height:{{ height_value + "vh;" }}
+		float: left;
+		border: 2px solid #EEEEEE;
+		position:relative;
+	}
+	.Amber {
+		background: #EB9532;
+	}
+	.Red {
+		background: #EF4836;
+	}
+	.Grey {
+		background: #7F8C8D;
+	}
+
+	.Project {
+		background: #EEEEEE;
+		width:{{ width_value + "%;" }}
+		height: 10vh;
+		float: left;
+		border: 2px solid #EEEEEE;
+		position:relative;
+	}
+</style>
+<head>
+	<div class="Project centreText">DRV</div>
+	<div class="Project centreText">LC</div>
+	<div class="Project centreText">DM</div>
+	<div class="Project centreText">DMP</div>
+</head>
+<body>
+
+{% for item in json_hash %}
+	{% for key, value in item.items() %}
+		{% if 'result' in key %}
+			{% set env = 'empty' %}
+			{% set status = 'empty' %}
+			{% set url = 'empty' %}
+		 	{% for key2, value2 in value.items() %}
+					{% if key2 == 'env' %}
+						{% set env = value2 %}
+					{% endif %}
+					{% if key2 == 'status' %}
+						{% set status = value2 %}
+					{% endif %}
+					{% if key2 == 'url' %}
+						{% set url = value2 %}
+					{% endif %}
+					{% if env != 'empty' and status != 'empty' and url != 'empty' %}
+						<a target="_blank" href="{{ url }}">
+							<button type="button" class="{{ status }}" data-toggle="modal" data-target="">
+								<div class="centreMe">
+									<div><b>{{ env }}</b></div>
+								</div>
+							</button>
+						</a>
+					{% endif %}
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>
